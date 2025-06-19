@@ -1,10 +1,14 @@
 import sqlite3
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
+import os
 
-DB_PATH = "geboortedaghit.db"
+load_dotenv()
+
+DATABASE = os.getenv("DATABASE")
 
 def main():
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
 
     cursor.execute("SELECT id, from_date, to_date FROM charts ORDER BY from_date")

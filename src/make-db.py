@@ -1,6 +1,12 @@
 import sqlite3
+from dotenv import load_dotenv
+import os
 
-con = sqlite3.connect("geboortedaghit.db")
+load_dotenv()
+
+DATABASE = os.getenv("DATABASE")
+
+con = sqlite3.connect("DATABASE")
 cur = con.cursor()
 
 #create Charts table

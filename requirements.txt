@@ -1,2 +1,4 @@
 beautifulsoup4
 requirements
+google-api-python-client
+spotipy

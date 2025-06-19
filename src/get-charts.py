@@ -3,12 +3,16 @@ import requests
 from bs4 import BeautifulSoup
 import re
 from datetime import datetime, timedelta
+from dotenv import load_dotenv
+import os
 
-DB_PATH = "geboortedaghit.db"
+load_dotenv()
+
+DATABASE = os.getenv("DATABASE")
 BASE_URL = "https://www.top40.nl/top40/{year}/week-{week}"
 
 def main():
-    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(DATABASE)
     cursor = conn.cursor()
 
     latest_date = get_latest_chart_date(cursor)
