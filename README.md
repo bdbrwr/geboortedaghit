@@ -1,10 +1,24 @@
-# bootdev_first_personal
+# Geboortedaghit
 
-For my first personal project, I actually wanted to keep the repository private for the initial bit. 
-This is the public facing repo to align with the boot.dev course!
+## Introduction
+This is a recreation of what once was available. 
 
-I might release the actual repository later, or share it through other means. 
+For my first personal project, I am recreating a website I cannot longer find:
+What was on number 1 in the Dutch (my local) charts the day I was born - or any given day for that matter. 
 
-Peace!
+I have looked for this website recently and was not able to find it, only alternatives to the American or other globally more popular charts.
 
-~B
+---
+
+TBC
+
+## Stack
+
+## How to
+
+## Requirements
+
+--
+
+### Contact me
+--
