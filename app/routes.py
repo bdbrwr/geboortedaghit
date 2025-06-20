@@ -14,6 +14,16 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
+def format_date_dutch(date_obj):
+    months = [
+        "januari", "februari", "maart", "april", "mei", "juni",
+        "juli", "augustus", "september", "oktober", "november", "december"
+    ]
+    day = date_obj.day
+    month = months[date_obj.month - 1]
+    year = date_obj.year
+    return f"{day} {month} {year}"
+
 @main.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
@@ -45,6 +55,7 @@ def index():
         if top_song_row is None:
             return render_template('index.html', error="Geen nummer 1 gevonden voor deze datum.")
 
-        return render_template('result.html', song=top_song_row, birthdate=birthdate)
+        formatted_date = format_date_dutch(birthdate)
+        return render_template('result.html', song=top_song_row, birthdate=formatted_date)
 
     return render_template('index.html')

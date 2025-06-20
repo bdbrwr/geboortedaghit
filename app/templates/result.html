@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="nl">
 <head>
+    <meta charset="UTF-8">
     <title>Jouw Geboortedaghit</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>De nummer 1 op jouw geboortedag ({{ birthdate }}):</h1>
+    <h1>De #1 in de Nederland op {{ birthdate }} was..</h1>
     <h2>{{ song['title'] }} — {{ song['artist'] }}</h2>
-
-    <br>
     <a href="/">Check een andere datum</a>
 </body>
 </html>
