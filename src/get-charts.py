@@ -37,8 +37,8 @@ def main():
             soup = get_data(url)
 
             week_info_text = soup.select_one(".list__nav-bar--week-info").text.strip()
-            week_number, to_date = parse_week_info(week_info_text)
-            from_date = to_date - timedelta(days=6)
+            week_number, from_date = parse_week_info(week_info_text)
+            to_date = from_date + timedelta(days=6)
 
             songs_raw = soup.select("div.top40-list__item")
             songs = [parse_song_info(s) for s in songs_raw if parse_song_info(s) is not None]
