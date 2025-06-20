@@ -29,6 +29,8 @@ CREATE TABLE songs (
     artist TEXT NOT NULL,
     spotify_link TEXT,
     youtube_link TEXT,
+    spotify_checked BOOLEAN DEFAULT 0,
+    youtube_checked BOOLEAN DEFAULT 0,
     UNIQUE(title, artist)
 )
 """)

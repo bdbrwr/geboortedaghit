@@ -17,17 +17,18 @@ youtube = build('youtube', 'v3', developerKey=YOUTUBE_API_KEY)
 conn = sqlite3.connect(DATABASE)
 cur = conn.cursor()
 
-# Fetch songs without a YouTube link, prioritize #1 hits
+# Fetch songs without a YouTube link, and not yet checked
+# Prioritize songs that hit #1 in the charts
 cur.execute("""
     SELECT DISTINCT s.id, s.artist, s.title
     FROM songs s
     LEFT JOIN chart_songs cs ON s.id = cs.song_id
-    WHERE s.youtube_link IS NULL
+    WHERE s.youtube_link IS NULL AND s.youtube_checked = 0
     ORDER BY CASE WHEN cs.position = 1 THEN 0 ELSE 1 END, s.id
 """)
 songs = cur.fetchall()
 
-def is_match(query, result, threshold=0.6):
+def is_match(query, result, threshold=0.5):
     return difflib.SequenceMatcher(None, query.lower(), result.lower()).ratio() >= threshold
 
 def get_youtube_link(artist, title):
@@ -51,19 +52,25 @@ def get_youtube_link(artist, title):
             return f"https://www.youtube.com/watch?v={item['id']['videoId']}"
     return None
 
-# Process and update each song with throttling
+# Process and update each song
 for song_id, artist, title in songs:
     print(f"[YouTube] Processing: {artist} - {title}")
     youtube_link = get_youtube_link(artist, title)
 
+    # Update youtube_link if found, and always mark as checked
+    cur.execute("""
+        UPDATE songs
+        SET youtube_link = ?, youtube_checked = 1
+        WHERE id = ?
+    """, (youtube_link, song_id))
+    conn.commit()
+
     if youtube_link:
-        cur.execute("UPDATE songs SET youtube_link = ? WHERE id = ?", (youtube_link, song_id))
-        conn.commit()
         print(f"Added link: {youtube_link}")
     else:
         print("No match found")
 
-    time.sleep(0.5)  # Throttle: wait 0.5s between requests
+    time.sleep(0.5)  # Throttle: avoid quota exhaustion
 
 print("YouTube links updated.")
 conn.close()

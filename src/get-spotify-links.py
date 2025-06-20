@@ -12,22 +12,21 @@ DATABASE = os.getenv("DATABASE")
 SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
 SPOTIFY_CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
 
-# Initialize Spotify API client
 spotify = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
     client_id=SPOTIFY_CLIENT_ID,
     client_secret=SPOTIFY_CLIENT_SECRET
 ))
 
-# Connect to the database
 conn = sqlite3.connect(DATABASE)
 cur = conn.cursor()
 
-# Prioritize songs that hit #1 first, then others
+# Fetch songs without a Spotify link and not yet checked
+# Prioritize songs that reached #1 in the charts
 cur.execute("""
     SELECT DISTINCT s.id, s.artist, s.title
     FROM songs s
     LEFT JOIN chart_songs cs ON s.id = cs.song_id
-    WHERE s.spotify_link IS NULL
+    WHERE s.spotify_link IS NULL AND s.spotify_checked = 0
     ORDER BY CASE WHEN cs.position = 1 THEN 0 ELSE 1 END, s.id
 """)
 songs = cur.fetchall()
@@ -51,19 +50,23 @@ def get_spotify_link(artist, title):
             return track['external_urls']['spotify']
     return None
 
-# Process and update each song with throttling
 for song_id, artist, title in songs:
     print(f"[Spotify] Processing: {artist} - {title}")
     spotify_link = get_spotify_link(artist, title)
 
+    cur.execute("""
+        UPDATE songs
+        SET spotify_link = ?, spotify_checked = 1
+        WHERE id = ?
+    """, (spotify_link, song_id))
+    conn.commit()
+
     if spotify_link:
-        cur.execute("UPDATE songs SET spotify_link = ? WHERE id = ?", (spotify_link, song_id))
-        conn.commit()
         print(f"Added link: {spotify_link}")
     else:
         print("No match found")
 
-    time.sleep(0.5)  # Throttle: wait 0.5s between requests
+    time.sleep(0.7)
 
 print("Spotify links updated.")
 conn.close()
