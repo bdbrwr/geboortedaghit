@@ -25,7 +25,6 @@ def main():
     start_year, start_week = get_next_chart(cursor, latest_date)
 
     while True:
-        # Get real calendar-based Friday for the current week
         chart_friday = get_friday_date(start_year, start_week)
         if chart_friday >= today:
             print(f"Reached future chart: week {start_week} of {start_year} (Friday = {chart_friday}). Stopping.")
@@ -56,16 +55,30 @@ def main():
             chart_id = cursor.lastrowid
 
             for song_info in songs:
+                # Insert or ignore song into songs table
                 cursor.execute("""
-                    INSERT INTO chart_songs (position, artist, title, chart, spotify_link, youtube_link)
-                    VALUES (?, ?, ?, ?, ?, ?)
+                    INSERT OR IGNORE INTO songs (title, artist) VALUES (?, ?)
+                """, (song_info['title'], song_info['artist']))
+
+                # Retrieve the song_id
+                cursor.execute("""
+                    SELECT id FROM songs WHERE title = ? AND artist = ?
+                """, (song_info['title'], song_info['artist']))
+                song_row = cursor.fetchone()
+                if not song_row:
+                    print(f"Failed to retrieve song ID for: {song_info['artist']} - {song_info['title']}")
+                    continue
+
+                song_id = song_row[0]
+
+                # Insert into chart_songs
+                cursor.execute("""
+                    INSERT INTO chart_songs (position, chart, song_id)
+                    VALUES (?, ?, ?)
                 """, (
                     song_info['position'],
-                    song_info['artist'],
-                    song_info['title'],
                     chart_id,
-                    None,
-                    None
+                    song_id
                 ))
 
             conn.commit()
@@ -171,7 +184,7 @@ def get_friday_date(year, week_number):
         if day.weekday() == 4:
             count += 1
         day += timedelta(days=1)
-    return (day - timedelta(days=1)).date()  # ← return date directly
+    return (day - timedelta(days=1)).date()
 
 
 if __name__ == "__main__":
