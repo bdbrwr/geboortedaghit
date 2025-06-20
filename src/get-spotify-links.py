@@ -1,5 +1,6 @@
 import sqlite3
 import difflib
+import time
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 from dotenv import load_dotenv
@@ -21,8 +22,14 @@ spotify = spotipy.Spotify(auth_manager=SpotifyClientCredentials(
 conn = sqlite3.connect(DATABASE)
 cur = conn.cursor()
 
-# Fetch songs without a Spotify link
-cur.execute("SELECT id, artist, title FROM songs WHERE spotify_link IS NULL")
+# Prioritize songs that hit #1 first, then others
+cur.execute("""
+    SELECT DISTINCT s.id, s.artist, s.title
+    FROM songs s
+    LEFT JOIN chart_songs cs ON s.id = cs.song_id
+    WHERE s.spotify_link IS NULL
+    ORDER BY CASE WHEN cs.position = 1 THEN 0 ELSE 1 END, s.id
+""")
 songs = cur.fetchall()
 
 def is_match(query, result, threshold=0.6):
@@ -33,7 +40,7 @@ def get_spotify_link(artist, title):
     try:
         results = spotify.search(q=query, limit=1, type='track')
     except Exception as e:
-        print(f"Spotify error: {e}")
+        print(f"[Error] Spotify API error: {e}")
         return None
 
     items = results['tracks']['items']
@@ -44,7 +51,7 @@ def get_spotify_link(artist, title):
             return track['external_urls']['spotify']
     return None
 
-# Process and update each song
+# Process and update each song with throttling
 for song_id, artist, title in songs:
     print(f"[Spotify] Processing: {artist} - {title}")
     spotify_link = get_spotify_link(artist, title)
@@ -52,6 +59,11 @@ for song_id, artist, title in songs:
     if spotify_link:
         cur.execute("UPDATE songs SET spotify_link = ? WHERE id = ?", (spotify_link, song_id))
         conn.commit()
+        print(f"Added link: {spotify_link}")
+    else:
+        print("No match found")
+
+    time.sleep(0.5)  # Throttle: wait 0.5s between requests
 
 print("Spotify links updated.")
 conn.close()
