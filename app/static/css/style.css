@@ -1,25 +1,34 @@
-/* Dark mode with purple accents */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #1e1e2f;
-    color: #e0e0f0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
+    justify-content: flex-start;
+    min-height: 100vh;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    font-family: 'Inter', sans-serif;
+    background-color: #1e1e2f;
+    color: #e0e0f0;
     text-align: center;
 }
 
 h1 {
     color: #c084fc;
+    margin: 3vh 0 0.5rem 0;
 }
 
 h2 {
     font-size: 2rem;
     color: #ffffff;
-    margin-top: 1rem;
+    margin: 1rem 0 0.5rem 0;
 }
 
 form {
@@ -74,5 +83,57 @@ a {
 }
 
 a:hover {
+    background-color: #9f4dfc;
+}
+
+.youtube-preview {
+    margin-top: 0.5rem;
+}
+
+.youtube-thumbnail {
+    width: 100%;
+    max-width: 560px;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease;
+    cursor: pointer;
+}
+
+.youtube-thumbnail:hover {
+    transform: scale(1.02);
+}
+
+.spotify-button-container {
+    margin-top: 1.2rem;
+}
+
+.spotify-button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #1DB954;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.spotify-button:hover {
+    background-color: #1ed760;
+}
+
+.back-link {
+    margin-top: 1rem;
+    display: inline-block;
+    text-decoration: none;
+    color: #c084fc;
+    background-color: #7c3aed;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.back-link:hover {
     background-color: #9f4dfc;
 }

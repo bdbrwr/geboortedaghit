@@ -45,7 +45,8 @@ def index():
             return render_template('index.html', error="Geen hitlijst gevonden voor deze datum.")
 
         top_song_row = conn.execute("""
-            SELECT s.title, s.artist FROM chart_songs cs
+            SELECT s.title, s.artist, s.youtube_link, s.spotify_link
+            FROM chart_songs cs
             JOIN songs s ON s.id = cs.song_id
             WHERE cs.chart = ? AND cs.position = 1
             LIMIT 1

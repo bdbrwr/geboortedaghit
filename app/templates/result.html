@@ -7,8 +7,27 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>De #1 in de Nederland op {{ birthdate }} was..</h1>
+    <h1>De #1 in Nederland op {{ birthdate }} was..</h1>
+
     <h2>{{ song['title'] }} — {{ song['artist'] }}</h2>
-    <a href="/">Check een andere datum</a>
+
+    {% if song['youtube_link'] %}
+        {% set video_id = song['youtube_link'].split('v=')[-1].split('&')[0] if 'v=' in song['youtube_link'] else song['youtube_link'].split('/')[-1] %}
+        <div class="youtube-preview">
+            <a href="{{ song['youtube_link'] }}" target="_blank">
+                <img src="https://img.youtube.com/vi/{{ video_id }}/hqdefault.jpg" alt="YouTube preview" class="youtube-thumbnail">
+            </a>
+        </div>
+    {% endif %}
+
+    {% if song['spotify_link'] %}
+        <div class="spotify-button-container">
+            <a href="{{ song['spotify_link'] }}" target="_blank" class="spotify-button">
+                🎧 Luister op Spotify
+            </a>
+        </div>
+    {% endif %}
+
+    <a href="/" class="back-link">Check een andere datum</a>
 </body>
 </html>
