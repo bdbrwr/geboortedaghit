@@ -21,10 +21,17 @@
     {% endif %}
 
     {% if song['spotify_link'] %}
-        <div class="spotify-button-container">
-            <a href="{{ song['spotify_link'] }}" target="_blank" class="spotify-button">
-                🎧 Luister op Spotify
-            </a>
+        {% set track_id = song['spotify_link'].split('/')[-1].split('?')[0] %}
+        <div class="spotify-embed-container">
+            <iframe style="border-radius:12px"
+                    src="https://open.spotify.com/embed/track/{{ track_id }}"
+                    width="100%"
+                    height="152"
+                    frameborder="0"
+                    allowfullscreen=""
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy">
+            </iframe>
         </div>
     {% endif %}
 
