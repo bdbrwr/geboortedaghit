@@ -6,6 +6,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+SOCIAL_LINKS = {
+    'twitter': os.getenv('TWITTER_URL'),
+    'github': os.getenv('GITHUB_URL'),
+    'linkedin': os.getenv('LINKEDIN_URL'),
+    'kofi': os.getenv('KOFI_URL')
+}
+
 main = Blueprint('main', __name__)
 DB_PATH = os.getenv('DATABASE', 'fallback.db')
 
@@ -57,6 +64,6 @@ def index():
             return render_template('index.html', error="Geen nummer 1 gevonden voor deze datum.")
 
         formatted_date = format_date_dutch(birthdate)
-        return render_template('result.html', song=top_song_row, birthdate=formatted_date)
+        return render_template('result.html', song=top_song_row, birthdate=formatted_date, social_links=SOCIAL_LINKS)
 
-    return render_template('index.html')
+    return render_template('index.html', social_links=SOCIAL_LINKS)
