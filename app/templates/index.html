@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <div class="zoom-wrapper">
+    <main class="zoom-wrapper">
         <h1>Welke dag wil je weten?</h1>
         <form method="post">
             <input type="date" name="birthdate" required>
@@ -17,7 +17,12 @@
         {% if error %}
             <p>{{ error }}</p>
         {% endif %}
+
+    <div class="zoom-test">
+        <p>This text should look BIG on mobile.</p>
     </div>
+
+    </main>
 
     {% include '_footer.html' %}
 </body>

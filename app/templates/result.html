@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <div class="zoom-wrapper">
+    <main class="zoom-wrapper">
         <h1>De #1 in Nederland op {{ birthdate }} was..</h1>
 
         <h2>{{ song['title'] }} — {{ song['artist'] }}</h2>
@@ -38,7 +38,7 @@
     {% endif %}
 
     <a href="/" class="back-link">Check een andere datum</a>
-    </div>
+    </main>
 
     {% include '_footer.html' %}
 </body>
