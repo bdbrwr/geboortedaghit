@@ -167,7 +167,7 @@ p {
 
 @media (max-width: 768px) {
   .zoom-wrapper {
-    transform: scale(2);
+    transform: scale(3);
     transform-origin: center top;
     width: 100%;
     display: flex;
@@ -175,20 +175,20 @@ p {
   }
 
   .zoom-wrapper > * {
-    width: calc(100% / 1.2);
+    width: calc(100% / 3);
   }
 }
 
 @media (max-width: 768px) {
   .site-footer {
-    font-size: 1rem; /* or larger if needed */
+    font-size: 2rem; /* or larger if needed */
   }
 
   .site-footer p {
-    font-size: 1rem;
+    font-size: 2rem;
   }
 
   .site-footer a {
-    font-size: 1rem;
+    font-size: 2rem;
   }
 }
