@@ -167,26 +167,24 @@ p {
 
 @media (max-width: 768px) {
   .zoom-wrapper {
-    transform: scale(1.2); /* Try 2 or 3 if needed */
+    transform: scale(1.2);
     transform-origin: top center;
-    margin-top: 2vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
-  /* Prevent horizontal scroll caused by scaling */
-  html, body {
-    overflow-x: hidden;
+  .zoom-wrapper > * {
+    width: calc(100% / 1.2);
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
-  /* Footer text scaling (independent of zoom) */
-  .site-footer,
-  .site-footer p,
-  .site-footer a {
-    font-size: 1rem !important; /* use !important to override existing styles */
+  h1, h2, p, form {
+    max-width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
-}
-
-.zoom-test {
-  font-size: 1rem;
 }
 
 
