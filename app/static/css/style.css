@@ -165,6 +165,10 @@ p {
     text-decoration: underline;
 }
 
+.spotify-embed-container {
+    margin-top: 0.5rem;
+  }
+
 @media (max-width: 768px) {
   .zoom-wrapper {
     transform: scale(1.2);
@@ -186,6 +190,14 @@ p {
     transform: scale(0.833); /* reverse of 1.2 */
     transform-origin: top center;
     width: 100%;
+  }
+
+  .spotify-embed-container {
+    margin-top: 2rem;
+  }
+
+  .youtube-preview {
+    margin-top: 2rem;
   }
 
   /* Make sure text doesn't spill off screen */
