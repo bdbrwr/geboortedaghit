@@ -18,7 +18,6 @@ conn = sqlite3.connect(DATABASE)
 cur = conn.cursor()
 
 # Fetch songs without a YouTube link, and not yet checked
-# Prioritize songs that hit #1 in the charts
 cur.execute("""
     SELECT DISTINCT s.id, s.artist, s.title
     FROM songs s
@@ -52,10 +51,18 @@ def get_youtube_link(artist, title):
             return f"https://www.youtube.com/watch?v={item['id']['videoId']}"
     return None
 
-# Process and update each song
+# Process and update up to 100 songs
+max_requests = 100
+request_count = 0
+
 for song_id, artist, title in songs:
+    if request_count >= max_requests:
+        print("Reached maximum request limit.")
+        break
+
     print(f"[YouTube] Processing: {artist} - {title}")
     youtube_link = get_youtube_link(artist, title)
+    request_count += 1
 
     # Update youtube_link if found, and always mark as checked
     cur.execute("""
