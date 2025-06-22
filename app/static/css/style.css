@@ -171,7 +171,8 @@ p {
     transform-origin: top center;
     width: 100%;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
   }
 
   .zoom-wrapper > * {
@@ -180,12 +181,23 @@ p {
     box-sizing: border-box;
   }
 
+  /* Unscale only this embed */
+  .no-zoom {
+    transform: scale(0.833); /* reverse of 1.2 */
+    transform-origin: top center;
+    width: 100%;
+  }
+
+  /* Make sure text doesn't spill off screen */
   h1, h2, p, form {
     max-width: 100%;
     word-wrap: break-word;
     overflow-wrap: break-word;
   }
+
+  /* Lift the footer slightly to avoid bottom scroll */
+  .site-footer {
+    padding-bottom: 3rem;
+  }
 }
-
-
 
