@@ -2,20 +2,22 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.5">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ToenOp1 | Wat stond op #1 in Nederland op..</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>Welke dag wil je weten?</h1>
-    <form method="post">
-        <input type="date" name="birthdate" required>
-        <button type="submit">Bekijk #1 hit</button>
-    </form>
-    {% if error %}
-        <p>{{ error }}</p>
-    {% endif %}
+    <div class="zoom-wrapper">
+        <h1>Welke dag wil je weten?</h1>
+        <form method="post">
+            <input type="date" name="birthdate" required>
+            <button type="submit">Bekijk #1 hit</button>
+        </form>
+        {% if error %}
+            <p>{{ error }}</p>
+        {% endif %}
+    </div>
 
     {% include '_footer.html' %}
 </body>

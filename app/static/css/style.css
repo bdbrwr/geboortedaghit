@@ -164,3 +164,31 @@ p {
     color: #c084fc;
     text-decoration: underline;
 }
+
+@media (max-width: 768px) {
+  .zoom-wrapper {
+    transform: scale(2);
+    transform-origin: center top;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .zoom-wrapper > * {
+    width: calc(100% / 1.2);
+  }
+}
+
+@media (max-width: 768px) {
+  .site-footer {
+    font-size: 1rem; /* or larger if needed */
+  }
+
+  .site-footer p {
+    font-size: 1rem;
+  }
+
+  .site-footer a {
+    font-size: 1rem;
+  }
+}
