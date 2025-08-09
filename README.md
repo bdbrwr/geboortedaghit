@@ -1,4 +1,4 @@
-# ToenOp1.nl – Dutch Birthday Hit Finder 🎶  
+# ToenOp1.nl – Dutch Birthday Hit Finder 🎶
 _A web app to find out what song was #1 on the Dutch charts on your birthday. (Or any other day)_
 
 [Live site: toenop1.nl](https://toenop1.nl)
