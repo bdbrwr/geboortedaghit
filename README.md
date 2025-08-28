@@ -87,6 +87,15 @@ Then open your browser and go to: [http://localhost:5000](http://localhost:5000)
 
 ---
 
+## 7. To Do
+
+- Swap to UV
+- Implement actual tracking on website
+- URL paths to actual dates
+- Suggested dates (18th birthday from birthday, 9 months before etc)
+
+---
+
 ## Contributing
 
 Suggestions, fixes, and improvements are very welcome. If you’d like to contribute, feel free to fork the repo, open an issue, or submit a pull request.
