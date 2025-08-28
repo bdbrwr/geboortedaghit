@@ -87,7 +87,7 @@ Then open your browser and go to: [http://localhost:5000](http://localhost:5000)
 
 ---
 
-## 7. To Do
+## To Do
 
 - Swap to UV
 - Implement actual tracking on website
